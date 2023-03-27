@@ -10,8 +10,12 @@ fetch('firstView.html')
         if(response.ok) {
             console.log(response.text());
         }
+        response.text().then((data)=>{
 
-        throw new Error('Network response was not ok');
+            $('.content').html(data);
+
+        });
+        //throw new Error('Network response was not ok');
     })
     .catch((error) => {
         console.log(error);

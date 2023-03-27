@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3fed080-be3f-4ac7-aedb-888f949ed8eb" name="Changes" comment="Fix">
-      <change beforePath="$PROJECT_DIR$/firstView.html" beforeDir="false" afterPath="$PROJECT_DIR$/firstView.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679903257227</updated>
       <workItem from="1679903258463" duration="5563000" />
-      <workItem from="1679909908081" duration="306000" />
+      <workItem from="1679909908081" duration="759000" />
     </task>
     <task id="LOCAL-00001" summary="Fix">
       <created>1679909955006</created>
@@ -81,11 +82,36 @@
       <option name="project" value="LOCAL" />
       <updated>1679909955006</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fix">
+      <created>1679910239721</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679910239721</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix">
+      <created>1679910312312</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679910312312</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fix" />
