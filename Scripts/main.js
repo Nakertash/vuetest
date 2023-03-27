@@ -1,21 +1,25 @@
-/*var app = new Vue({
-    el: '#app',
-    data: {
-        product: "Socks",
-        productImg:"https://ltheme.com/wp-content/uploads/2022/04/uncaught-referenceerror-is-not-defined.png"
-    }
-})*/
-fetch('firstView.html')
-    .then((response) => {
-        if(response.ok) {
-        }
-        response.text().then((data)=>{
 
-            $('.content').html(data);
-
-        });
-        //throw new Error('Network response was not ok');
+function LoadLayout(name)
+{
+    var promise = new Promise(function(resolve, reject) {
+        fetch(name+'.html')
+            .then((response) => {
+                if(response.ok) {
+                    return response.text();
+                }
+                reject();
+                //throw new Error('Network response was not ok');
+            })
+            .then((data)=>{
+                $('.content').html(data);
+                resolve();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     })
-    .catch((error) => {
-        console.log(error);
-    });
+    return promise;
+}
+LoadLayout("MainMenu").then(()=>{
+    $("#title").text("Haha classic");
+});
