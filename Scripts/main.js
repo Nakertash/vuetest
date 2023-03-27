@@ -24,5 +24,5 @@ LoadLayout("MainMenu").then(()=>{
     $("#title").text("Haha classic");
     $("#icon").attr("src","Icon.png");
     player.healthChanged.push(function (){$("#icon").width($("#icon").width()*(player.health/player.maxHealth));});
-    player.TakeDamage(-90);
+    setInterval(function (){ player.TakeDamage(5)},1000);
 });
