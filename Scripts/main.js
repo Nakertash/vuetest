@@ -8,7 +8,6 @@
 fetch('firstView.html')
     .then((response) => {
         if(response.ok) {
-            console.log(response.text());
         }
         response.text().then((data)=>{
 
