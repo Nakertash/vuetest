@@ -1,2 +1,2 @@
-var player={ health:10, maxHealth:100};
+var player={ health:100, maxHealth:100};
 player.healthChanged=[];
