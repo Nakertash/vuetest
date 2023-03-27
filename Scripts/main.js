@@ -23,5 +23,6 @@ function LoadLayout(name)
 LoadLayout("MainMenu").then(()=>{
     $("#title").text("Haha classic");
     $("#icon").attr("src","Icon.png");
-    $("#icon").width($("#icon").width()*(player.health/player.maxHealth));
+    player.healthChanged.push(()=>{$("#icon").width($("#icon").width()*(player.health/player.maxHealth));});
+    player.TakeDamage(-90);
 });
