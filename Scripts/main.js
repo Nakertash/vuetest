@@ -22,5 +22,5 @@ function LoadLayout(name)
 }
 LoadLayout("MainMenu").then(()=>{
     $("#title").text("Haha classic");
-    $("#icon").src("Icon.png");
+    $("#icon").src="Icon.png";
 });
