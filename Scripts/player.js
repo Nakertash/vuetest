@@ -1,6 +1,7 @@
 var player={ health:100, maxHealth:100};
 player.healthChanged=[];
 player.TakeDamage= (amount)=>{
+    console.log(this);
     if(this.health-amount>0)
     {
         this.health=this.health-amount
