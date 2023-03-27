@@ -7,5 +7,5 @@ player.TakeDamage= (amount)=>{
     }else{
         this.health=0;
     }
-    healthChanged.forEach(element => element());
+    this.healthChanged.forEach(element => element());
 };
