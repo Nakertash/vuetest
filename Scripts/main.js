@@ -8,7 +8,7 @@
 fetch('firstView.html')
     .then((response) => {
         if(response.ok) {
-            console.log(response);
+            console.log(response.text());
         }
 
         throw new Error('Network response was not ok');
