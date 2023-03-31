@@ -22,10 +22,16 @@
                 <div class="modal-body">
                   <slot name="body">
                     
-                        <div class="w-100 d-flex flex-row justify-content-between" v-for="(item,index) in weapons">
-                            <h2>{{item.name}}</h2>
-                            <h3>{{item.damage}}</h3>
-                            <button class="btn" v-on:click="app()?app().setWeapon(index):'';">купить</button>
+                        <div class="w-100 d-flex flex-row justify-content-between" :style="{'margin-bottom':'1vh'}" v-for="(item,index) in weapons">
+                            <div class="d-flex flex-row justify-content-between align-items-end">
+                                <h2 style="margin-right:1vw;">{{item.name}}</h2>
+                                <br>
+                                <h3 style="margin-right:1vw;"> Урон: {{item.damage}}</h3>
+                                <br>
+                                <h3 style="margin-right:1vw;"> цена: {{item.cost}}</h3>
+                            </div>
+                            
+                            <button :class="{btn:true,'btn-success':app()?(app().char.money>=item.cost):false,'btn-danger':app()?(app().char.money<item.cost):false}" v-on:click="app()?app().setWeapon(index):'';">купить</button>
                         </div>
                     
                   </slot>
@@ -75,6 +81,7 @@ import {newPlayer,weapons} from './Scripts/player.js';
 import {newEnemy} from './Scripts/enemy.js';
 let player=newPlayer();
 let currentEnemy= newEnemy();
+let inventoryWeapons=[0];
 console.log(currentEnemy);
 Vue.component('enemy',{
     data:function(){

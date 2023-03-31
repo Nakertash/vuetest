@@ -1,22 +1,27 @@
 export let weapons=[{
     name:"простой кинжал",
-    damage:2
+    damage:2,
+    cost:20
 },
 {
     name:" кинжал",
-    damage:12
+    damage:12,
+    cost:2000
 },
 {
     name:"топор",
-    damage:23
+    damage:23,
+    cost:2000
 },
 {
     name:"молот",
-    damage:41
+    damage:41,
+    cost:2000
 },
 {
     name:"секира",
-    damage:52
+    damage:52,
+    cost:2000
 }];
 export function newPlayer(){
     var player={
