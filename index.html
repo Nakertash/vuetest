@@ -5,19 +5,215 @@
     <title>title</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script type="text/x-template" id="modal-template">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-container">
+  
+                <div class="modal-header">
+                  <slot name="header">
+                    <h2>Магазин</h2>
+                  </slot>
+                </div>
+  
+                <div class="modal-body">
+                  <slot name="body">
+                    
+                        <div class="w-100 d-flex flex-row justify-content-between" v-for="(item,index) in weapons">
+                            <h2>{{item.name}}</h2>
+                            <h3>{{item.damage}}</h3>
+                            <button class="btn" v-on:click="app()?app().setWeapon(index):'';">купить</button>
+                        </div>
+                    
+                  </slot>
+                </div>
+  
+                <div class="modal-footer">
+                  <slot name="footer">
+                    <button class="modal-default-button" @click="$emit('close')">
+                      OK
+                    </button>
+                  </slot>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </script> 
 </head>
 <body>
-<div class="header bg-primary w-100">
-    <h1 style="color: aliceblue">Header</h1>
-</div>
-<div class="content bg-secondary">
+    <div id="app" style="width:100%;height:100%;margin:0px;padding:0px;">
+        <div class="header w-100">
+            <div class=" d-flex flex-column justify-content-between align-items-start h-100" style="margin-left:10%;margin-right:10%; width:80%;">
+                <h2 class="h-75" style="margin:0px; font-size: 3vh;">Игрок</h2>
+                <h2 class="h-75" style="margin:0px; font-size: 2.5vh;">Монеты: {{char.money}}</h2>
 
-</div>
-<div class="footer bg-primary w-100">
-    <h2 style="color: aliceblue">Footer</h2>
-</div>
+                <div class="progress w-100 h-25" >
+                    <div class=" health-bar progress-bar" :style="{width:char.healthPercents()}" ></div>
+                </div>
+            </div>
+        </div>
+        <div class="content bg-light">
+            
+            <enemy></enemy>
+        </div>
+        <div class="footer w-100">
+            <button id="show-modal" @click="showModal = true">Магазин</button>
+        </div>
+        <modal v-if="showModal" @close="showModal = false"></modal>
+        <div class="damage" :style="{backgroundColor:getColor()}">
+
+        </div>
+    </div>
+
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
-<script src="Scripts/main.js"></script>
+<script type="module">
+import {newPlayer,weapons} from './Scripts/player.js';
+import {newEnemy} from './Scripts/enemy.js';
+let player=newPlayer();
+let currentEnemy= newEnemy();
+console.log(currentEnemy);
+Vue.component('enemy',{
+    data:function(){
+        var dat={
+            id:"enemy",
+            name:function(){
+                if(currentEnemy!=null)
+                {
+                    return currentEnemy.name;
+                }else{
+                    return "[empty]";
+                }
+            },
+            state:function(){
+                if(currentEnemy!=null)
+                {
+                    return currentEnemy.state;
+                }else{
+                    return "none";
+                }
+            },
+            healthPercents:function(){
+
+                if(currentEnemy!=null)
+                {
+                    return ((currentEnemy.health/currentEnemy.maxHealth)*100)+"%";
+                }else{
+                    return "0%";
+                }
+            },
+            damage:function(){
+                if(currentEnemy!=null)
+                {
+                    return currentEnemy.damage;
+                }else{
+                    return 0;
+                }
+            }
+        };
+        return dat;
+    },
+    template:`<div class="w-100 d-flex flex-column align-items-center justify-content-beetwen">
+        <h1 style="font-size: 7vh;">{{name()}}</h1>
+        <h1 style="font-size: 4vh;">[состояние: {{state()}}]</h1>
+        <div class="progress" style="heigth:3vh; margin-right:20%;margin-left:20%;width:60%;">
+            <div class=" health-bar progress-bar" :style="{width:healthPercents()}" ></div>
+        </div>
+        <button style="height:20vh; margin-top:10vh;width:40vw;background-color: rgb(255, 82, 82) !important;" v-on:click="dmgToPlayer()" class="btn"><h1 style="font-size: 4vh;">Ударить</h1></button>
+    </div>`,
+    methods:{
+        dmgToPlayer()
+        {
+            if(currentEnemy!=null)
+            {
+                currentEnemy.health-=app.char.weapon.damage;
+            }
+        }
+    }
+})
+Vue.component("modal", {
+        data:function(){
+            return {weapons:weapons,app:function(){if(app!=null){return app}}};
+        },
+        template: "#modal-template"
+      });
+let app= new Vue({
+    el:'#app',
+    data:{
+        char:player,
+        redrawD:0,
+        showModal:true,
+        red:255,
+        green:82,
+        blue:82,
+        alpha:0,
+        weapons:weapons,
+        timer:null
+    },
+    methods:{
+        redraw(){
+            this.redrawD++;
+        },
+        getColor(){
+            return "rgba("+this.red+","+this.green+","+this.blue+","+this.alpha+")";
+        },
+        setDamage(){
+            this.alpha=0.5;
+            this.timer=setInterval(()=>{
+                this.alpha-=0.01;
+                if(this.alpha<=0)
+                {
+                    this.alpha=0;
+                    clearInterval(this.timer);
+                }
+            },5);
+        },
+        setWeapon(index){
+            console.log(index);
+        }
+    }
+});
+setInterval(()=>{
+    app.redraw();
+    app.$children.forEach(element=>{
+        element.$forceUpdate();
+    });
+    if(app.showModal)
+    {
+        return;
+    }
+    if(currentEnemy!=null)
+    {
+        if(currentEnemy.canAttack())
+        {
+            app.setDamage();
+            app.char.health-=currentEnemy.damage;
+        }
+
+        if(currentEnemy.health<=0)
+        {
+            
+            app.char.money+=currentEnemy.money;
+            currentEnemy=null;
+            app.char.health=app.char.maxHealth;
+            setTimeout(()=>{currentEnemy=newEnemy();},1000);
+            
+        }
+    }
+},1);
+</script>
+<script>
+    function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+Array.prototype.random = function random() {
+    return this[getRandomInt(0,this.length)];
+};
+</script>
 </body>
 </html>
